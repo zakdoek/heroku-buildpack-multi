@@ -16,6 +16,12 @@ for BUILDPACK in $(cat $1/.buildpacks); do
   dir=$(mktemp -t buildpackXXXXX)
   rm -rf $dir
 
+  # Test if buildpack rules must be evaluated
+  if [ "$BUILDPACK_MULTI_EVAL" == true ]; then
+      echo "=====> Evaluating buildpack rule..."
+      BUILDPACK=$(eval echo "$BUILDPACK")
+  fi
+
   url=${BUILDPACK%#*}
   branch=${BUILDPACK#*#}
 
