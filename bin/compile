@@ -10,6 +10,19 @@ function indent() {
   esac
 }
 
+export_env_dir() {
+    env_dir=$3
+    whitelist_regex=${2:-''}
+    blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+    if [ -d "$env_dir" ]; then
+        for e in $(ls $env_dir); do
+            echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+                export "$e=$(cat $env_dir/$e)"
+            :
+        done
+    fi
+}
+
 ENV_DIR=$3
 
 unset GIT_DIR
@@ -22,6 +35,7 @@ for BUILDPACK in $(cat $1/.buildpacks); do
   buildpack_multi_eval=$(cat $ENV_DIR/BUILDPACK_MULTI_EVAL)
   if [ "$buildpack_multi_eval" == true ]; then
       echo "=====> Evaluating buildpack rule..."
+      export_env_dir
       BUILDPACK=$(eval echo "$BUILDPACK")
   else
       echo "=====> No eval"
