@@ -10,7 +10,8 @@ function indent() {
   esac
 }
 
-export_env_dir() {
+function export_env_dir() {
+    echo "=====> Exporting environment..."
     env_dir=$3
     whitelist_regex=${2:-''}
     blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
@@ -37,6 +38,7 @@ for BUILDPACK in $(cat $1/.buildpacks); do
       echo "=====> Evaluating buildpack rule..."
       export_env_dir
       BUILDPACK=$(eval echo "$BUILDPACK")
+      echo "=====> Evaluated buildpack: $BUILDPACK"
   else
       echo "=====> No eval"
   fi
