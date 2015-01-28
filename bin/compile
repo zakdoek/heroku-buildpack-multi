@@ -10,6 +10,8 @@ function indent() {
   esac
 }
 
+ENV_DIR=$3
+
 unset GIT_DIR
 
 for BUILDPACK in $(cat $1/.buildpacks); do
@@ -17,7 +19,8 @@ for BUILDPACK in $(cat $1/.buildpacks); do
   rm -rf $dir
 
   # Test if buildpack rules must be evaluated
-  if [ "$BUILDPACK_MULTI_EVAL" == true ]; then
+  $buildpack_multi_eval=$(cat $ENV_DIR/BUILDPACK_MULTI_EVAL)
+  if [ "$buildpack_multi_eval" == true ]; then
       echo "=====> Evaluating buildpack rule..."
       BUILDPACK=$(eval echo "$BUILDPACK")
   else
