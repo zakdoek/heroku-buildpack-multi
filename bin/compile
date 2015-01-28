@@ -20,6 +20,8 @@ for BUILDPACK in $(cat $1/.buildpacks); do
   if [ "$BUILDPACK_MULTI_EVAL" == true ]; then
       echo "=====> Evaluating buildpack rule..."
       BUILDPACK=$(eval echo "$BUILDPACK")
+  else
+      echo "=====> No eval"
   fi
 
   url=${BUILDPACK%#*}
