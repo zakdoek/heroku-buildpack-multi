@@ -19,7 +19,7 @@ for BUILDPACK in $(cat $1/.buildpacks); do
   rm -rf $dir
 
   # Test if buildpack rules must be evaluated
-  $buildpack_multi_eval=$(cat $ENV_DIR/BUILDPACK_MULTI_EVAL)
+  buildpack_multi_eval=$(cat $ENV_DIR/BUILDPACK_MULTI_EVAL)
   if [ "$buildpack_multi_eval" == true ]; then
       echo "=====> Evaluating buildpack rule..."
       BUILDPACK=$(eval echo "$BUILDPACK")
