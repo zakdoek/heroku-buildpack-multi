@@ -26,7 +26,7 @@ for machine_rc in $(ls "$ENV_DIR" | grep "BUILDPACK_MULTI_MACHINE_"); do
         echo "machine ${machine_rc_array[0]}" >> $HOME/.netrc
         echo "  login ${machine_rc_array[1]}" >> $HOME/.netrc
         echo "  password ${machine_rc_array[2]}" >> $HOME/.netrc
-        echo "\n" >> $HOME/.netrc
+        echo "" >> $HOME/.netrc
     fi
 done
 
