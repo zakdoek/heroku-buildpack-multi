@@ -23,11 +23,15 @@ for machine_rc in $(ls "$ENV_DIR" | grep "BUILDPACK_MULTI_MACHINE_"); do
     # Test parameter lenght sufficient
     if [ ${#machine_rc_array[@]} == 3 ]; then
         # Write to netrc
-        echo "Machine: ${machine_rc_array[0]}"
-        echo "Login: ${machine_rc_array[1]}"
-        echo "Password: ${machine_rc_array[2]}"
+        echo "machine ${machine_rc_array[0]}" >> $HOME/.netrc
+        echo "  login ${machine_rc_array[1]}" >> $HOME/.netrc
+        echo "  password ${machine_rc_array[2]}" >> $HOME/.netrc
+        echo "\n" >> $HOME/.netrc
     fi
 done
+
+# Output for test
+cat $HOME/.netrc
 
 for BUILDPACK in $(cat $1/.buildpacks); do
   dir=$(mktemp -t buildpackXXXXX)
