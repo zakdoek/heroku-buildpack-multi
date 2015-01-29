@@ -12,6 +12,23 @@ function indent() {
 
 unset GIT_DIR
 
+# Add netrc to be able to fetch private repositories not ready for public
+ENV_DIR=$3
+
+# Loop over machine configurations
+for machine_rc in $(ls "$ENV_DIR" | grep BUILDPACK_MULTI_MACHINE_); do
+    # Read configurations into array
+    read -a machine_rc_array <<< $(cat "$ENV_DIR/$machine_rc")
+
+    # Test parameter lenght sufficient
+    if [ ${#machine_rc_array[@]} == 3 ]; then
+        # Write to netrc
+        echo "Machine: ${machine_rc_array[0]}"
+        echo "Login: ${machine_rc_array[1]}"
+        echo "Password: ${machine_rc_array[2]}"
+    fi
+done
+
 for BUILDPACK in $(cat $1/.buildpacks); do
   dir=$(mktemp -t buildpackXXXXX)
   rm -rf $dir
