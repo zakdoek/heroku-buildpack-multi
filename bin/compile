@@ -30,9 +30,6 @@ for machine_rc in $(ls "$ENV_DIR" | grep "BUILDPACK_MULTI_MACHINE_"); do
     fi
 done
 
-# Output for test
-cat $HOME/.netrc
-
 for BUILDPACK in $(cat $1/.buildpacks); do
   dir=$(mktemp -t buildpackXXXXX)
   rm -rf $dir
