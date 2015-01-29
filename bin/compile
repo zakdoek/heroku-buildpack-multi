@@ -16,7 +16,7 @@ unset GIT_DIR
 ENV_DIR=$3
 
 # Loop over machine configurations
-for machine_rc in $(ls "$ENV_DIR" | grep BUILDPACK_MULTI_MACHINE_); do
+for machine_rc in $(ls "$ENV_DIR" | grep "BUILDPACK_MULTI_MACHINE_"); do
     # Read configurations into array
     read -a machine_rc_array <<< $(cat "$ENV_DIR/$machine_rc")
 
